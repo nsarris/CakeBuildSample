@@ -1,0 +1,56 @@
+{
+  "webSites": {
+    "NgApp1": {
+      "projectFolder": "NgApp1"
+    },
+    "NgApp2": {
+      "projectFolder": "NgApp1"
+    }
+  },
+  "webApplications": {
+    "WebApplication1": {
+      "projectFolder": "WebApplication1",
+      "projectFile": "WebApplication1.csproj",
+      "packageInstaller": "_PublishedWebsites/WebApplication1_Package/WebApplication1.deploy.cmd",
+      "packageFile": "_PublishedWebsites/WebApplication1_Package/WebApplication1.zip"
+    },
+    "WebApplication2": {
+      "projectFolder": "WebApplication2",
+      "projectFile": "WebApplication2.csproj",
+      "packageInstaller": "_PublishedWebsites/WebApplication2_Package/WebApplication2.deploy.cmd",
+      "packageFile": "_PublishedWebsites/WebApplication2_Package/WebApplication2.zip"
+    }
+  },
+  "windowsApplications": {
+    "WindowsService1": {
+      "projectFolder": "WindowsService1",
+      "projectFile": "WindowsService1.csproj",
+      "binaryFile": "WindowsService1.exe",
+      "isWindowsService": true,
+      "isTopshelfService": true,
+      "serviceName": "WindowsService1",
+      "description": "Test service #1."
+    },
+    "WindowsService2": {
+      "projectFolder": "WindowsService2",
+      "projectFile": "WindowsService2.csproj",
+      "binaryFile": "WindowsService2.exe",
+      "isWindowsService": true,
+      "isTopshelfService": true,
+      "serviceName": "WindowsService2",
+      "description": "Test service #2."
+    }
+  },
+  "databases": {
+    "Database1": {
+      "projectFolder": "Database1",
+      "projectFile": "Database1.sqlproj",
+      "packageFile": "Database1.dacpac"
+    },
+    "Database2": {
+      "projectFolder": "Database2",
+      "projectFile": "Database2.sqlproj",
+      "packageFile": "Database2.dacpac"
+    }
+  }
+}

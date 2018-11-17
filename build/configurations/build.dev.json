@@ -1,0 +1,47 @@
+{
+  "environmentName": "Dev",
+  "rootOutputFolder": "Dev",
+  "webSiteOutputFolder": "WebSites",
+  "webApplicationOutputFolder": "WebApps",
+  "windowsApplicationOutputFolder": "Services",
+  "databaseOutputFolder": "Databases",
+  "commonConfigFolder": "Configuration",
+  "commonConfigFile": "CommonDevConfig.json",
+  "appConfigFile": "DevConfig.json",
+  "webSites": [{
+      "projectName": "NgApp1",
+      "environment": "dev",
+      "isProductionBuild": false
+    },
+    {
+      "projectName": "NgApp2",
+      "environment": "dev",
+      "isProductionBuild": false
+    }
+  ],
+  "webApplications": [{
+      "projectName": "WebApplication1",
+      "buildConfiguration": "Debug"
+    },
+    {
+      "projectName": "WebApplication2",
+      "buildConfiguration": "Debug"
+    }
+  ],
+  "windowsApplications": [{
+      "projectName": "WindowsService1",
+      "buildConfiguration": "Debug"
+    },
+    {
+      "projectName": "WindowsService2",
+      "buildConfiguration": "Debug"
+    }
+  ],
+  "databases": [{
+      "projectName": "Database1"
+    },
+    {
+      "projectName": "Database2"
+    }
+  ]
+}
