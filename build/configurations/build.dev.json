@@ -1,15 +1,20 @@
 {
   "environmentName": "Dev",
   "rootOutputFolder": "Dev",
-  "webSiteOutputFolder": ".",
-  "webApplicationOutputFolder": ".",
-  "windowsApplicationOutputFolder": ".",
-  "databaseOutputFolder": ".",
+  "webSiteOutputFolder": "WebSites",
+  "webApplicationOutputFolder": "WebApplications",
+  "windowsApplicationOutputFolder": "WindowsServices",
+  "databaseOutputFolder": "Databases",
   "solutionOutputFolder": ".",
   "solutions": [{
-    "projectName": "CakeBuildSample",
+    "solutionName": "CakeBuildSample",
     "buildConfiguration": "Debug",
-    "createSolutionFolder": false
+    "createSolutionFolder": false,
+    "publishedProjects": [
+      "WebApplication1", "WebApplication2",
+      "WindowsService1", "WindowsService2",
+      "Database1", "Database2"
+    ]
   }],
   "webSites": [{
       "projectName": "NgApp1",

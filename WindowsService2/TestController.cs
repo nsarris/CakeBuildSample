@@ -10,6 +10,6 @@ namespace WindowsService2
     public class TestController : ApiController
     {
         [HttpGet]
-        public string GetTime() => DateTime.Now.ToString();
+        public string GetTime() => CommonLibrary.Common.GetTime().ToString();
     }
 }

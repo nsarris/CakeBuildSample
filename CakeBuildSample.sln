@@ -5,13 +5,6 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database1", "Database1\Database1.sqlproj", "{96821D02-BF76-4B20-9605-F7DCDBA04AD0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C84894B9-1412-4E20-81AE-73DFAD3A82A5}"
-	ProjectSection(SolutionItems) = preProject
-		build.cake = build.cake
-		build.ps1 = build.ps1
-		cake.config = cake.config
-	EndProjectSection
-EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database2", "Database2\Database2.sqlproj", "{355C2D65-EC4F-4EB4-AA74-BBBA9CE83C4B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NgApp1", "NgApp1\NgApp1.csproj", "{76B9ABC3-3EFE-48F1-AA53-DFD065D1623E}"
@@ -25,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsService1", "WindowsService1\WindowsService1.csproj", "{81A89AAD-8473-4FBB-936C-11B67E4FA06F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsService2", "WindowsService2\WindowsService2.csproj", "{06FCAC17-7866-4F22-ABA3-0DCAC64B18AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLibrary", "CommonLibrary\CommonLibrary.csproj", "{67B645A7-7EB7-427D-B701-350D3433B5EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +59,10 @@ Global
 		{06FCAC17-7866-4F22-ABA3-0DCAC64B18AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06FCAC17-7866-4F22-ABA3-0DCAC64B18AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06FCAC17-7866-4F22-ABA3-0DCAC64B18AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67B645A7-7EB7-427D-B701-350D3433B5EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67B645A7-7EB7-427D-B701-350D3433B5EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67B645A7-7EB7-427D-B701-350D3433B5EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67B645A7-7EB7-427D-B701-350D3433B5EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

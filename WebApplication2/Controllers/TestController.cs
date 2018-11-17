@@ -10,6 +10,6 @@ namespace WebApplication2.Controllers
     public class TestController : ApiController
     {
         [HttpGet]
-        public string GetTime() => DateTime.Now.ToString();
+        public string GetTime() => CommonLibrary.Common.GetTime().ToString();
     }
 }

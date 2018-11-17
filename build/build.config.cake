@@ -24,7 +24,7 @@ class GlobalSettings {
 }
 
 class Projects {
-    public Dictionary<string, ProjectMetadata> Solutions { get; set; }
+    public Dictionary<string, SolutionMetadata> Solutions { get; set; }
     public Dictionary<string, ProjectMetadata> WebSites { get; set; }
     public Dictionary<string, ProjectMetadata> WebApplications { get; set; }
     public Dictionary<string, ProjectMetadata> WindowsApplications { get; set; }
@@ -66,16 +66,48 @@ class BuildScheme {
         return $"{GlobalSettings.GlobalOutputPath}/{RootOutputFolder}";
     }
 
-    public string GetOutputFolder (ProjectBuildSettings project, bool projectFolder = true) {
-        return $"{GetRootOutputFolder()}/{GetProjectOutputRootFolder(project.ProjectType)}/{(projectFolder ? project.ProjectName : ".")}";
+    public string GetOutputFolder (ProjectBuildSettings project) {
+        return GetOutputFolder(project.ProjectType, project.ProjectName);
+    }
+
+    public string GetSolutionOutputFolder (SolutionBuildSettings solution, bool projectFolders) {
+        return GetOutputFolder(ProjectType.Solution, solution.SolutionName, projectFolders);
+    }
+
+    public string GetOutputFolder (ProjectType projectType, string projectName, bool projectFolder = true) {
+        return $"{GetRootOutputFolder()}/{GetProjectOutputRootFolder(projectType)}/{(projectFolder ? projectName : ".")}";
     }
 
     public string GetAbsoluteProjectFolder (ProjectBuildSettings project) {
         return $"{GlobalSettings.SolutionRoot}/{project.ProjectMetadata.ProjectFolder}";
     }
 
+    public string GetAbsoluteSolutionFolder (SolutionBuildSettings project) {
+        return $"{GlobalSettings.SolutionRoot}/{project.SolutionMetadata.SolutionFolder}";
+    }
+
     public string GetAbsoluteProjectFile (ProjectBuildSettings project) {
         return $"{GetAbsoluteProjectFolder(project)}/{project.ProjectMetadata.ProjectFile}";
+    }
+
+    public string GetAbsoluteSolutionFile (SolutionBuildSettings solution) {
+        return $"{GetAbsoluteSolutionFolder(solution)}/{solution.SolutionMetadata.SolutionFile}";
+    }
+
+    public (string key, ProjectType projectType, ProjectMetadata metadata) GetProjectMetadataFromFolder(SolutionBuildSettings settings, string folderName)
+    {
+        return
+        settings.SolutionMetadata.Databases.Where(x => folderName == System.IO.Path.GetFileNameWithoutExtension(x.Value.ProjectFile)).Select(x => (x.Key, ProjectType.Database, x.Value)).Concat(
+        settings.SolutionMetadata.WebApplications.Where(x => folderName == System.IO.Path.GetFileNameWithoutExtension(x.Value.ProjectFile)).Select(x => (x.Key, ProjectType.WebApplication, x.Value)).Concat(
+        settings.SolutionMetadata.WindowsApplications.Where(x => folderName == System.IO.Path.GetFileNameWithoutExtension(x.Value.ProjectFile)).Select(x => (x.Key, ProjectType.WindowsApplication, x.Value))))
+        .FirstOrDefault();
+    }
+
+    public bool IsPublishedProjectFolder(SolutionBuildSettings settings, string folderName)
+    {
+        var project = GetProjectMetadataFromFolder(settings, folderName);
+
+        return settings.PublishedProjects.Contains(project.key);
     }
 }
 
@@ -83,6 +115,14 @@ abstract class ProjectBuildSettings {
     public ProjectMetadata ProjectMetadata { get; set; }
     public string ProjectName { get; set; }
     public abstract ProjectType ProjectType { get; }
+}
+
+class SolutionMetadata {
+    public string SolutionFolder { get; set; }
+    public string SolutionFile { get; set; }
+    public Dictionary<string, ProjectMetadata> WebApplications { get; set; }
+    public Dictionary<string, ProjectMetadata> WindowsApplications { get; set; }
+    public Dictionary<string, ProjectMetadata> Databases { get; set; }
 }
 
 class ProjectMetadata {
@@ -104,10 +144,12 @@ class AngularWebSiteBuildSettings : ProjectBuildSettings {
     public string BaseHref { get; set; }
 }
 
-class SolutionBuildSettings : ProjectBuildSettings {
-    public override ProjectType ProjectType => ProjectType.Solution;
-    public string BuildConfiguration { get; set; }
+class SolutionBuildSettings {
+    public string SolutionName { get; set; }
+    public string BuildConfiguration { get; set; } = "Debug";
     public bool CreateSolutionFolder { get; set; } = true;
+    public SolutionMetadata SolutionMetadata { get; set; }
+    public List<string> PublishedProjects { get; set; } = new List<string>();
 }
 
 class WebApplicationBuildSettings : ProjectBuildSettings {
@@ -146,21 +188,25 @@ void LoadBuildScheme (string outputRootPath, string projectsFile, string buildCo
     };
 
     buildScheme.Solutions.ForEach (x => {
-        if (projects.Solutions.TryGetValue (x.ProjectName, out var metadata)) x.ProjectMetadata = metadata;
-        else throw new KeyNotFoundException ($"Solution {x.ProjectName} not found in projects file");
+        if (projects.Solutions.TryGetValue (x.SolutionName, out var metadata)) x.SolutionMetadata = metadata;
+        else throw new KeyNotFoundException ($"Solution {x.SolutionName} not found in projects file");
     });
+
     buildScheme.WebSites.ForEach (x => {
         if (projects.WebSites.TryGetValue (x.ProjectName, out var metadata)) x.ProjectMetadata = metadata;
         else throw new KeyNotFoundException ($"WebSite {x.ProjectName} not found in projects file");
     });
+
     buildScheme.WebApplications.ForEach (x => {
         if (projects.WebApplications.TryGetValue (x.ProjectName, out var metadata)) x.ProjectMetadata = metadata;
         else throw new KeyNotFoundException ($"WebApplication {x.ProjectName} not found in projects file");
     });
+
     buildScheme.WindowsApplications.ForEach (x => {
         if (projects.WindowsApplications.TryGetValue (x.ProjectName, out var metadata)) x.ProjectMetadata = metadata;
         else throw new KeyNotFoundException ($"WindowsApplication {x.ProjectName} not found in projects file");
     });
+
     buildScheme.Databases.ForEach (x => {
         if (projects.Databases.TryGetValue (x.ProjectName, out var metadata)) x.ProjectMetadata = metadata;
         else throw new KeyNotFoundException ($"Database project {x.ProjectName} not found in projects file");
