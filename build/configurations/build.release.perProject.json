@@ -1,0 +1,46 @@
+{
+  "environmentName": "Release",
+  "rootOutputFolder": "Release",
+  "webSiteOutputFolder": "WebSites",
+  "webApplicationOutputFolder": "WebApplications",
+  "windowsApplicationOutputFolder": "WindowsApplications",
+  "databaseOutputFolder": "Databases",
+  "solutionOutputFolder": "Solutions",
+  "solutions": [ ],
+  "webSites": [{
+      "projectName": "NgApp1",
+      "environment": "prod",
+      "isProductionBuild": true
+    },
+    {
+      "projectName": "NgApp2",
+      "environment": "prod",
+      "isProductionBuild": true
+    }
+  ],
+  "webApplications": [{
+      "projectName": "WebApplication1",
+      "buildConfiguration": "Release"
+    },
+    {
+      "projectName": "WebApplication2",
+      "buildConfiguration": "Release"
+    }
+  ],
+  "windowsApplications": [{
+      "projectName": "WindowsService1",
+      "buildConfiguration": "Release"
+    },
+    {
+      "projectName": "WindowsService1",
+      "buildConfiguration": "Release"
+    }
+  ],
+  "databases": [{
+      "projectName": "Database1"
+    },
+    {
+      "projectName": "Database2"
+    }
+  ]
+}

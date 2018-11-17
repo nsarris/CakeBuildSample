@@ -1,4 +1,10 @@
 {
+  "solutions":{
+    "CakeBuildSample": {
+      "projectFolder": ".",
+      "projectFile": "CakeBuildSample.sln"
+    }
+  },
   "webSites": {
     "NgApp1": {
       "projectFolder": "NgApp1"

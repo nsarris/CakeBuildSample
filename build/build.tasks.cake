@@ -20,12 +20,14 @@ Task(BuildTargets.BuildAllProjects)
   .Does(()=>
   {
     RunInParallel(EnumerableConcat(
+        buildScheme.Solutions.Select(x => (Action)(() => BuildSolution(buildScheme, x))),
         buildScheme.WebSites.Select(x => (Action)(() => BuildAngularProject(buildScheme, x))),
-        buildScheme.Databases.Select(x => (Action)(() => BuildDatabaseProject(buildScheme, x))),
-        GetSingleActionAsEnumerable(
-          buildScheme.WebApplications.Select(x => (Action)(() => BuildWebApplication(buildScheme, x))),
-          buildScheme.WindowsApplications.Select(x => (Action)(() => BuildWindowsApplication(buildScheme, x)))
-      )));
+         buildScheme.Databases.Select(x => (Action)(() => BuildDatabaseProject(buildScheme, x))),
+         GetSingleActionAsEnumerable(
+           buildScheme.WebApplications.Select(x => (Action)(() => BuildWebApplication(buildScheme, x))),
+           buildScheme.WindowsApplications.Select(x => (Action)(() => BuildWindowsApplication(buildScheme, x)))
+        )
+      ));
   });
 
 Task(BuildTargets.Run)

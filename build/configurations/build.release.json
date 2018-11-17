@@ -1,13 +1,16 @@
 {
   "environmentName": "Release",
   "rootOutputFolder": "Release",
-  "webSiteOutputFolder": "WebSites",
-  "webApplicationOutputFolder": "WebApps",
-  "windowsApplicationOutputFolder": "Services",
-  "databaseOutputFolder": "Databases",
-  "commonConfigFolder": "Configuration",
-  "commonConfigFile": "CommonDevConfig.json",
-  "appConfigFile": "DevConfig.json",
+  "webSiteOutputFolder": ".",
+  "webApplicationOutputFolder": ".",
+  "windowsApplicationOutputFolder": ".",
+  "databaseOutputFolder": ".",
+  "solutionOutputFolder": ".",
+  "solutions": [{
+    "projectName": "CakeBuildSample",
+    "buildConfiguration": "Release",
+    "createSolutionFolder": false
+  }],
   "webSites": [{
       "projectName": "NgApp1",
       "environment": "prod",
@@ -19,29 +22,7 @@
       "isProductionBuild": true
     }
   ],
-  "webApplications": [{
-      "projectName": "WebApplication1",
-      "buildConfiguration": "Release"
-    },
-    {
-      "projectName": "WebApplication2",
-      "buildConfiguration": "Release"
-    }
-  ],
-  "windowsApplications": [{
-      "projectName": "WindowsService1",
-      "buildConfiguration": "Release"
-    },
-    {
-      "projectName": "WindowsService1",
-      "buildConfiguration": "Release"
-    }
-  ],
-  "databases": [{
-      "projectName": "Database1"
-    },
-    {
-      "projectName": "Database2"
-    }
-  ]
+  "webApplications": [ ],
+  "windowsApplications": [ ],
+  "databases": [ ]
 }

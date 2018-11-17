@@ -2,6 +2,32 @@
 
 #load "./build.config.cake"
 
+void BuildSolution(BuildScheme buildScheme,SolutionBuildSettings settings)
+{
+  var config = new MSBuildSettings()
+    .SetConfiguration(settings.BuildConfiguration)
+    .SetMaxCpuCount(0)
+    .UseToolVersion(MSBuildToolVersion.VS2017)
+    .SetVerbosity(Verbosity.Normal)
+    .WithProperty("SolutionDir", $"{buildScheme.GlobalSettings.SolutionRoot}")
+    .WithProperty("OutDir", $"{buildScheme.GetOutputFolder(settings, settings.CreateSolutionFolder)}")
+    //.WithProperty("OutputPath", $"{buildScheme.GetOutputFolder(settings)}")
+    //.WithProperty("OutputPath", $"/bin/{settings.BuildConfiguration}")
+    .WithProperty("GenerateProjectSpecificOutputFolder","true")
+    .WithProperty("DeployOnBuild", "true")
+    .WithProperty("DeployTarget", "Package")
+    .WithProperty("MSDeployPublishMethod", "WMSVC")
+    .WithProperty("AllowUntrustedCertificate", "true")
+    .WithProperty("DebugSymbols", "false")
+    .WithProperty("DebugType", "none")
+    .WithProperty("GenerateDocumentation", "false")
+    .WithProperty("AllowedReferenceRelatedFileExtensions", "none")
+    .WithTarget("ReBuild")
+    ;
+
+  MSBuild(buildScheme.GetAbsoluteProjectFile(settings), config);
+}
+
 void BuildWindowsApplication(BuildScheme GetAbsoluteProjectFolder, WindowsApplicationBuildSettings settings)
 {
 var msBuildSettings = new MSBuildSettings()
@@ -15,16 +41,11 @@ var msBuildSettings = new MSBuildSettings()
         .WithProperty("DebugSymbols", "false")
         .WithProperty("DebugType", "none")
         .WithProperty("GenerateDocumentation", "false")
+        .WithProperty("AllowedReferenceRelatedFileExtensions", "none")
         .WithTarget("ReBuild")
         ;
       
       MSBuild(buildScheme.GetAbsoluteProjectFile(settings), msBuildSettings);
-
-      //var configDir = Directory($"{buildScheme.GetOutputFolder(settings)}/Configuration");
-      //var configFiles = GetFiles($"{configDir}/*.json");
-      //CopyFile($"{buildScheme.GlobalSettings.SolutionRoot}/{buildScheme.CommonConfigFolder}/{buildScheme.CommonConfigFile}", $"{configDir}/CommonConfig.json");
-      //CopyFile($"{configDir}/{buildScheme.AppConfigFile}", $"{configDir}/Config.json");
-      //DeleteFiles(configFiles);
 }
 
 void BuildWebApplication(BuildScheme buildScheme,WebApplicationBuildSettings settings)
@@ -44,8 +65,7 @@ void BuildWebApplication(BuildScheme buildScheme,WebApplicationBuildSettings set
     .WithProperty("DebugSymbols", "false")
     .WithProperty("DebugType", "none")
     .WithProperty("GenerateDocumentation", "false")
-    .WithProperty("CommonConfigFileName", buildScheme.CommonConfigFile)
-    .WithProperty("ConfigFileName",buildScheme.AppConfigFile)
+    .WithProperty("AllowedReferenceRelatedFileExtensions", "none")
     .WithTarget("ReBuild")
     ;
 
@@ -80,10 +100,6 @@ void BuildAngularProject(BuildScheme buildScheme,AngularWebSiteBuildSettings set
     if (settings.IsProductionBuild)
       arguments.Add("--prod");
     arguments.Add($"--output-path {buildScheme.GetOutputFolder(settings)}");
-    //if (!string.IsNullOrEmpty(settings.BaseHref))
-      //arguments.Add($"--base-href {settings.BaseHref}");
-    //if (!string.IsNullOrEmpty(settings.Environment))
-      //arguments.Add($"--environment={settings.Environment}");
 
     config.WorkingDirectory = workingDirectory;
     config.WithArguments(string.Join(" ", arguments)); 
